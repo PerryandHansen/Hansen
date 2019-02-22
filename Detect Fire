@@ -1,0 +1,31 @@
+#include <kipr/botball.h>
+
+int main()
+{
+    create_connect();
+    camera_open_black();
+    while(get_create_lbump()==0)
+    {
+        camera_update();
+        if(get_object_count(0)==0)
+        {
+            printf("no objects detected.\n");
+        }
+        else
+        {
+            if(get_object_center_x(0,0)<80)
+            {
+                create_drive_direct(50,100);
+                msleep(10);
+            }
+            else
+            {
+                create_drive_direct(100,50);
+                msleep(10);
+            }
+        }
+    }
+    camera_close();
+    create_disconnect();
+    return 0;
+}

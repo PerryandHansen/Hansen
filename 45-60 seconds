@@ -1,0 +1,121 @@
+#include <kipr/botball.h>
+void go_forward(int distance);
+void turn_left(int degrees);
+void turn_right(int degrees);
+void go_backward(int distance);
+void open_claw(int degrees);
+void close_claw(int degrees);
+void lift_claw(int distance);
+void lower_claw(int distance);
+int main()
+{
+    open_claw(60);
+    go_backward(3);
+    close_claw(70);
+    turn_right(135);
+    go_backward(15);
+    turn_right(90);
+    camera_open_black();
+    camera_update();
+    while((get_create_lbump()==0)&&(get_create_rbump()==0))
+    {
+    	if(get_object_count(0)==0)
+        	{
+            	create_drive_direct(145,125);
+            	msleep(10);
+        	}
+        	else
+        	{
+            	if(get_object_center_x(0,0)<80)
+            	{
+                	create_drive_direct(50,100);
+                	msleep(10);
+            	}
+            	else
+            	{
+                	create_drive_direct(100,50);
+                	msleep(10);
+            	}
+        	}
+    }
+    go_backward(4);
+    lift_claw(10);
+    turn_right(180);
+    go_backward(4);
+    open_claw(10);
+    go_forward(8);
+    turn_right(90);
+    while((get_create_lbump()==0)&&(get_create_rbump()==0))
+    {
+        create_drive_direct(145,125);
+        msleep(10);
+    }
+    go_backward(13);
+    return 0;
+}
+void go_forward(int distance)
+{ 
+    set_create_distance(0);
+	while(abs(get_create_distance())<distance*.68)
+		{
+		create_drive_direct(145,125);
+        msleep(10);        		
+		}
+}
+void turn_left(int degrees)
+{
+    set_create_total_angle(0);
+    while(abs(get_create_total_angle())<degrees*.466)
+    {
+        create_drive_direct(-100,140);
+        msleep(10);
+    }
+}
+void turn_right(int degrees)
+{
+    set_create_total_angle(0);
+    while(abs(get_create_total_angle())<degrees*.466)
+    {
+        create_drive_direct(100,-140);
+        msleep(10);
+    }
+}
+void go_backward(int distance)
+{ 
+    set_create_distance(0);
+	while(abs(get_create_distance())<distance*.68)
+		{
+        
+		create_drive_direct(-145,-125);
+		msleep(10);
+		}
+}
+void open_claw(int degrees)
+{
+    enable_servos();
+    set_servo_position(0,degrees*10);
+    disable_servos();
+}
+void close_claw(int degrees)
+{
+    enable_servos();
+    set_servo_position(0,degrees*10);
+    msleep(500);
+    disable_servos();
+}
+void lift_claw(int distance)
+{
+    enable_servos();
+    set_servo_position(1,1800);
+    set_servo_position(2,200);
+    msleep(2000);
+    disable_servos();
+}
+void lower_claw(int distance)
+{
+    enable_servos();
+    set_servo_position(1,200);
+    set_servo_position(2,1800);
+    msleep(2000);
+    disable_servos();
+}

@@ -1,17 +1,27 @@
 void go_forward(int distance);
+void go_backward(int distance);
 void turn_right(int degrees);
 void turn_left(int degrees);
 int main()
 {
 create_connect();
 go_forward(100);
-if(get_create_lcliff_amt()>1000)
+if(get_create_lcliff_amt()>1725)
 {
-turnright(90);
-while(get_create_lcliff_amt<1000)
+turn_right(90);
+while(get_create_lcliff_amt<1725)
 {
-create_drive_direct(145,125)
+create_drive_direct(145,125);
 }
 turn_right(180);
+go_forward(100);
+turn_right(90);
+go_forward(300);
+}
+else{
+turn_left(90);
+go_forward(100);
+turn_right(90);
+go_forward(300);
 }
 }

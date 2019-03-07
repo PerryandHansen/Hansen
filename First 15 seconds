@@ -7,27 +7,29 @@ void open_claw(int degrees);
 void close_claw(int degrees);
 void lift_claw(int distance);
 void lower_claw(int distance);
+
 int main()
 {
     create_connect();
-    wait_for_light(1);
-    shut_down_in(120);
-    go_backward(24);
+    //wait_for_light(1);
+    //shut_down_in(120);
+    go_backward(18);
     lower_claw(6);
     open_claw(60);
-    go_backward(4);
+    go_backward(2);
     close_claw(80);
-    lift_claw(12);
     turn_right(180);
-    go_backward(28);
-    turn_left(90);
+    go_backward(24);
+    lift_claw(12);
+    turn_right(90);
     camera_open_black();
     while((get_create_lbump()==0)&&(get_create_rbump()==0))
     {
         camera_update();
         if(get_object_count(0)==0)
         {
-            printf("no objects detected.\n");
+            create_drive_direct(95,75);
+            msleep(10);
         }
         else
         {
@@ -44,16 +46,17 @@ int main()
         }
     }
     camera_close();
-    go_backward(4);
+    go_backward(8);
     turn_left(180);
-    go_backward(2);
     lower_claw(2);
+    go_backward(4);
     open_claw(80);
-    go_forward(5);
+    
     
     create_disconnect();
     return 0;
 }
+
 void go_forward(int distance)
 { 
     set_create_distance(0);
@@ -108,19 +111,17 @@ void close_claw(int degrees)
 }
 void lift_claw(int distance)
 {
-    cmpc(0);
-    while(gmpc(0)<1600)
-    {
-    	mav(0,500);
-   		msleep(10);
-    }
+    enable_servos();
+    set_servo_position(1,1800);
+    set_servo_position(2,200);
+    msleep(2000);
+    disable_servos();
 }
 void lower_claw(int distance)
 {
-    cmpc(0);
-    while(gmpc(0)<1600)
-    {
-    	mav(0,500);
-   		msleep(10);
-    }
+    enable_servos();
+    set_servo_position(1,200);
+    set_servo_position(2,1800);
+    msleep(2000);
+    disable_servos();
 }

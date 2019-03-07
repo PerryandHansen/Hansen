@@ -2,6 +2,10 @@ void go_forward(int distance);
 void go_backward(int distance);
 void turn_right(int degrees);
 void turn_left(int degrees);
+void open_claw(int degrees);
+void close_claw(int degrees);
+void lower_claw(int distance);
+void lift_claw(int distance);
 int main()
 {
 create_connect();
@@ -14,14 +18,87 @@ while(get_create_lcliff_amt<1725)
 create_drive_direct(145,125);
 }
 turn_right(180);
-go_forward(100);
-turn_right(90);
-go_forward(300);
 }
-else{
+else
+{
 turn_left(90);
+}
 go_forward(100);
 turn_right(90);
+lower_claw(10);
 go_forward(300);
+lift_claw(10);
+go_forward(50);
+open_claw(10);
+closeclaw(10);
 }
+void go_forward(int distance)
+{ 
+    set_create_distance(0);
+	while(abs(get_create_distance())<distance*.68)
+		{
+		create_drive_direct(145,125);
+        msleep(10);
+        printf("distance =%d\n", get_create_distance());
+        		
+		}
+}
+void turn_left(int degrees)
+{
+    set_create_total_angle(0);
+    while(abs(get_create_total_angle())<degrees*.466)
+    {
+        create_drive_direct(-100,140);
+        msleep(10);
+    }
+}
+void turn_right(int degrees)
+{
+    set_create_total_angle(0);
+    while(abs(get_create_total_angle())<degrees*.466)
+    {
+        create_drive_direct(100,-140);
+        msleep(10);
+    }
+}
+void go_backward(int distance)
+{ 
+    set_create_distance(0);
+	while(abs(get_create_distance())<distance*.68)
+		{
+        
+		create_drive_direct(-145,-125);
+		msleep(10);
+		}
+}
+void open_claw(int degrees)
+{
+    enable_servos();
+    set_servo_position(0,degrees*10);
+    disable_servos();
+}
+void close_claw(int degrees)
+{
+    enable_servos();
+    set_servo_position(0,degrees*10);
+    msleep(500);
+    disable_servos();
+}
+void lift_claw(int distance)
+{
+    cmpc(0);
+    while(gmpc(0)<1600)
+    {
+    	mav(0,500);
+   		msleep(10);
+    }
+}
+void lower_claw(int distance)
+{
+    cmpc(0);
+    while(gmpc(0)<1600)
+    {
+    	mav(0,500);
+   		msleep(10);
+    }
 }

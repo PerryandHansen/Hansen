@@ -15,11 +15,11 @@ while(get_create_lbump()==0)
 create_drive_direct(145,125)
 }
 go_backward(2);
-turn_right(90);
+turn_left(90);
 lower_claw(10);
-go_forward(20);
+go_backward(20);
 lift_claw(10);
-go_forward(2);
+go_backward(2);
 open_claw(10);
 closeclaw(10);
 }

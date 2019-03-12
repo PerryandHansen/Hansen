@@ -12,7 +12,7 @@ create_connect();
 turn_left(90);
 while(get_create_lbump()==0)
 {
-create_drive_direct(145,125)
+create_drive_direct(145,125);
 }
 go_backward(2);
 turn_left(90);
@@ -21,7 +21,7 @@ go_backward(20);
 lift_claw(10);
 go_backward(2);
 open_claw(10);
-closeclaw(10);
+close_claw(10);
 }
 void go_forward(int distance)
 { 

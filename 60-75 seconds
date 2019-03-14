@@ -1,0 +1,92 @@
+void go_forward(int distance);
+void turn_left(int degrees);
+void turn_right(int degrees);
+void go_backward(int distance);
+void open_claw(int degrees);
+void close_claw(int degrees);
+void lift_claw(int distance);
+void lower_claw(int distance);
+int main()
+{
+    turn_left(180);
+    go_forward(15);
+    turn_left(90);
+    go_forward(50);
+    open_claw(80);
+    turn_right(180);
+    go_backward(50);
+    close_claw(90);
+    turn_right(90);
+    return 0;
+}
+void go_forward(int distance)
+{ 
+    set_create_distance(0);
+	while(abs(get_create_distance())<distance*.68)
+		{
+        msleep(10);
+		create_drive_direct(145,125);    		
+		}
+    create_stop();
+}
+void turn_left(int degrees)
+{
+    set_create_total_angle(0);
+    while(abs(get_create_total_angle())<degrees*.466)
+    {
+        create_drive_direct(-100,140);
+        msleep(10);
+    }
+    create_stop();
+}
+void turn_right(int degrees)
+{
+    set_create_total_angle(0);
+    while(abs(get_create_total_angle())<degrees*.466)
+    {
+        create_drive_direct(100,-140);
+        msleep(10);
+    }
+    create_stop();
+}
+void go_backward(int distance)
+{ 
+    set_create_distance(0);
+	while(abs(get_create_distance())<distance*.68)
+		{
+        
+		create_drive_direct(-145,-125);
+		msleep(10);
+		}
+    	create_stop();
+}
+void open_claw(int degrees)
+{
+    mav(0,1500);
+    msleep(degrees*20);
+    ao();
+}
+void close_claw(int degrees)
+{
+    mav(0,-1500);
+    msleep(degrees*20);
+    ao();
+}
+void lift_claw(int distance)
+{
+    enable_servos();
+    set_servo_position(1,1800);
+    set_servo_position(2,200);
+    msleep(2000);
+    disable_servos();
+    create_stop();
+}
+void lower_claw(int distance)
+{
+    enable_servos();
+    set_servo_position(1,200);
+    set_servo_position(2,1800);
+    msleep(2000);
+    disable_servos();
+    create_stop();
+}

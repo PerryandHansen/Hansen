@@ -1,0 +1,110 @@
+void go_forward(int distance);
+void turn_left(int degrees);
+void turn_right(int degrees);
+void go_backward(int distance);
+void open_claw(int degrees);
+void close_claw(int degrees);
+void lift_claw(int distance);
+void lower_claw(int distance);
+int main()
+{
+turn_left(135);
+open_claw(10);
+lower_claw(10);
+go_forward(10);
+turn_left(90);
+camera_open_black();
+    while((get_create_lbump()==0)&&(get_create_rbump()==0))
+    {
+        camera_update();
+        if(get_object_count(0)==0)
+        {
+            create_drive_direct(95,75);
+            msleep(10);
+        }
+        else
+        {
+            if(get_object_center_x(0,0)<80)
+            {
+                create_drive_direct(50,100);
+                msleep(10);
+            }
+            else
+            {
+                create_drive_direct(100,50);
+                msleep(10);
+            }
+        }
+    }
+}
+void go_forward(int distance)
+{ 
+    set_create_distance(0);
+	while(abs(get_create_distance())<distance*.68)
+		{
+        msleep(10);
+		create_drive_direct(145,125);    		
+		}
+    create_stop();
+}
+void turn_left(int degrees)
+{
+    set_create_total_angle(0);
+    while(abs(get_create_total_angle())<degrees*.466)
+    {
+        create_drive_direct(-100,140);
+        msleep(10);
+    }
+    create_stop();
+}
+void turn_right(int degrees)
+{
+    set_create_total_angle(0);
+    while(abs(get_create_total_angle())<degrees*.466)
+    {
+        create_drive_direct(100,-140);
+        msleep(10);
+    }
+    create_stop();
+}
+void go_backward(int distance)
+{ 
+    set_create_distance(0);
+	while(abs(get_create_distance())<distance*.68)
+		{
+        
+		create_drive_direct(-145,-125);
+		msleep(10);
+		}
+    	create_stop();
+}
+void open_claw(int degrees)
+{
+    mav(0,1500);
+    msleep(degrees*20);
+    ao();
+}
+void close_claw(int degrees)
+{
+    mav(0,-1500);
+    msleep(degrees*20);
+    ao();
+}
+void lift_claw(int distance)
+{
+    enable_servos();
+    set_servo_position(1,1800);
+    set_servo_position(2,200);
+    msleep(2000);
+    disable_servos();
+    create_stop();
+}
+void lower_claw(int distance)
+{
+    enable_servos();
+    set_servo_position(1,200);
+    set_servo_position(2,1800);
+    msleep(2000);
+    disable_servos();
+    create_stop();
+}

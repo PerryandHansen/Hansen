@@ -1,0 +1,27 @@
+#include <kipr/botball.h>
+void lift_claw(int distance);
+void lower_claw(int distance);
+int main()
+{
+    lift_claw(10);
+    lower_claw(10);
+    return 0;
+}
+void lift_claw(int distance)
+{
+    enable_servos();
+    set_servo_position(1,1800);
+    set_servo_position(2,200);
+    msleep(2000);
+    disable_servos();
+    create_stop();
+}
+void lower_claw(int distance)
+{
+    enable_servos();
+    set_servo_position(1,200);
+    set_servo_position(2,1800);
+    msleep(2000);
+    disable_servos();
+    create_stop();
+}
